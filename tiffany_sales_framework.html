@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffany 業務公式 — 可複製的銷售框架</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --gold: #c9a84c;
+    --gold-light: #f0d080;
+    --cream: #faf7f0;
+    --warm: #f5efe0;
+    --red: #c0392b;
+    --green: #1e6b45;
+    --blue: #1a3a5c;
+    --border: rgba(201,168,76,0.3);
+    --shadow: 0 4px 32px rgba(26,26,46,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(201,168,76,0.04) 40px, rgba(201,168,76,0.04) 41px);
+  }
+  header .label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500;
+  }
+  header h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.2;
+    position: relative;
+  }
+  header h1 span { color: var(--gold); }
+  header p.sub {
+    margin-top: 16px;
+    color: rgba(250,247,240,0.65);
+    font-size: 14px;
+    max-width: 560px;
+    position: relative;
+  }
+  .source-badge {
+    display: inline-block;
+    margin-top: 20px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    padding: 6px 16px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  /* NAV TABS */
+  .nav-wrap {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    overflow-x: auto;
+    padding: 0 40px;
+    gap: 0;
+    scrollbar-width: none;
+  }
+  .nav-wrap::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 14px 24px;
+    font-size: 13px;
+    color: rgba(250,247,240,0.45);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .nav-tab:hover { color: rgba(250,247,240,0.8); }
+  .nav-tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: #fff;
+    border: 1px solid rgba(26,26,46,0.08);
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .card-accent {
+    border-left: 4px solid var(--gold);
+  }
+  .card-red { border-left: 4px solid var(--red); }
+  .card-green { border-left: 4px solid var(--green); }
+  .card-blue { border-left: 4px solid var(--blue); }
+
+  .step-num {
+    display: inline-flex;
+    width: 36px; height: 36px;
+    background: var(--ink);
+    color: var(--gold);
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 900;
+    font-size: 16px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+
+  h2.section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  h2.section-title span { color: var(--gold); }
+  .section-intro {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3.card-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .formula-box {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 18px 22px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 16px 0;
+    line-height: 2;
+  }
+  .formula-box strong { color: var(--gold); font-size: 15px; }
+
+  .tag {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .tag.green { background: var(--green); color: #d4edda; }
+  .tag.red { background: var(--red); color: #fde8e8; }
+  .tag.blue { background: var(--blue); color: #d0e4f7; }
+
+  ul.dot-list { list-style: none; padding: 0; }
+  ul.dot-list li {
+    padding: 6px 0 6px 20px;
+    position: relative;
+    color: #444;
+    font-size: 14px;
+    border-bottom: 1px dashed rgba(26,26,46,0.06);
+  }
+  ul.dot-list li:last-child { border-bottom: none; }
+  ul.dot-list li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--gold);
+    font-size: 12px;
+    top: 8px;
+  }
+
+  /* FLOW DIAGRAM */
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 24px 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .flow-step {
+    flex: 1;
+    min-width: 120px;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 16px 14px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    position: relative;
+    border-radius: 3px;
+  }
+  .flow-step .num {
+    display: block;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    color: var(--gold);
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+  .flow-step .label { font-size: 12px; color: rgba(250,247,240,0.75); margin-top: 4px; }
+
+  /* COMPARISON TABLE */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+  .comp-table th {
+    background: var(--ink);
+    color: var(--gold);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .comp-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(26,26,46,0.07);
+    vertical-align: top;
+  }
+  .comp-table tr:nth-child(even) td { background: var(--warm); }
+  .good { color: var(--green); font-weight: 600; }
+  .bad { color: var(--red); }
+
+  /* QUOTE BOX */
+  .quote-box {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 24px 28px;
+    border-radius: 3px;
+    margin: 16px 0;
+    position: relative;
+  }
+  .quote-box::before {
+    content: '"';
+    font-family: 'Noto Serif TC', serif;
+    font-size: 60px;
+    color: var(--gold);
+    opacity: 0.4;
+    position: absolute;
+    top: 8px; left: 16px;
+    line-height: 1;
+  }
+  .quote-box p {
+    padding-left: 36px;
+    font-size: 14px;
+    line-height: 1.9;
+    color: rgba(250,247,240,0.9);
+  }
+  .quote-box .source {
+    padding-left: 36px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(26,26,46,0.06);
+    font-size: 14px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-icon {
+    width: 20px; height: 20px;
+    border: 2px solid var(--gold);
+    border-radius: 2px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .check-icon.checked {
+    background: var(--gold);
+  }
+  .check-icon.checked::after {
+    content: '✓';
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .checklist li.checked-item > span { text-decoration: line-through; color: #aaa; }
+
+  /* SCENARIO CARDS */
+  .scenario {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .scenario-q {
+    background: var(--warm);
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+  }
+  .scenario-q:hover { background: #ede8d8; }
+  .scenario-q .arrow {
+    font-size: 12px;
+    color: var(--gold);
+    transition: transform 0.2s;
+  }
+  .scenario-q.open .arrow { transform: rotate(90deg); }
+  .scenario-a {
+    display: none;
+    padding: 20px;
+    background: #fff;
+    border-top: 1px solid var(--border);
+  }
+  .scenario-a.open { display: block; }
+  .scenario-a .pattern {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .scenario-a p { font-size: 14px; color: #444; line-height: 1.8; }
+
+  /* PROGRESS BAR */
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .progress-bar-wrap {
+    flex: 1;
+    height: 4px;
+    background: rgba(26,26,46,0.1);
+    border-radius: 2px;
+    margin: 0 16px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 2px;
+    transition: width 0.4s;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 32px 20px 28px; }
+    main { padding: 32px 16px 60px; }
+    .nav-tab { padding: 12px 16px; font-size: 12px; }
+    .card { padding: 22px 18px; }
+    .flow-step { min-width: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="label">業務技能萃取系統</div>
+  <h1>Tiffany <span>業務公式</span><br>可複製的銷售框架</h1>
+  <p class="sub">從真實會議逐字稿萃取的組織化業務方法論，讓你從理解到執行都有公式可循。</p>
+  <div class="source-badge">📄 來源：iLego 合約系統銷售會議逐字稿</div>
+</header>
+
+<div class="nav-wrap">
+  <div class="nav-tab active" onclick="switchTab('overview')">📐 整體框架</div>
+  <div class="nav-tab" onclick="switchTab('opening')">🎯 開場公式</div>
+  <div class="nav-tab" onclick="switchTab('pitch')">💡 說服結構</div>
+  <div class="nav-tab" onclick="switchTab('objection')">🛡 應對技巧</div>
+  <div class="nav-tab" onclick="switchTab('closing')">🤝 收尾推進</div>
+  <div class="nav-tab" onclick="switchTab('checklist')">✅ 實戰清單</div>
+</div>
+
+<main>
+
+  <!-- ===== OVERVIEW ===== -->
+  <section id="overview" class="section active">
+    <h2 class="section-title">Tiffany 的<span>整體業務框架</span></h2>
+    <p class="section-intro">她的銷售邏輯不是靠話術，而是靠「結構」。每一場會議都在同一個骨架下運作，讓客戶感到安心、清晰、被尊重。</p>
+
+    <div class="card card-accent">
+      <div class="tag">核心公式</div>
+      <h3 class="card-title">T.A.R.E. 業務四階段模型</h3>
+      <div class="flow">
+        <div class="flow-step">
+          <span class="num">T</span>
+          Timeline<br>設定節奏
+          <div class="label">先說今天要做什麼</div>
+        </div>
+        <div class="flow-step">
+          <span class="num">A</span>
+          Anchor<br>建立錨點
+          <div class="label">五大理由 / 核心優勢</div>
+        </div>
+        <div class="flow-step">
+          <span class="num">R</span>
+          Respond<br>即時回應
+          <div class="label">精準處理客戶提問</div>
+        </div>
+        <div class="flow-step">
+          <span class="num">E</span>
+          Escalate<br>推進升級
+          <div class="label">確認下一步行動</div>
+        </div>
+      </div>
+      <div class="formula-box">
+        <strong>公式：</strong>我先告訴你今天的安排（T）→ 讓你知道選我們的理由（A）→ 你有問題我馬上給你答案（R）→ 我們約好下一步（E）
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tag blue">角色分工原則</div>
+      <h3 class="card-title">業務 vs 技術的黃金搭檔公式</h3>
+      <table class="comp-table">
+        <thead><tr><th>角色</th><th>負責什麼</th><th>Tiffany 的實際做法</th></tr></thead>
+        <tbody>
+          <tr><td><strong>業務（Tiffany）</strong></td><td>控制節奏、關係維繫、競品定位、推進決策</td><td>開場、競品比較表、處理採購決策話題</td></tr>
+          <tr><td><strong>技術（Steven）</strong></td><td>Demo、功能細節、技術可行性解釋</td><td>系統操作、HR 同步機制、身份角色說明</td></tr>
+        </tbody>
+      </table>
+      <div class="formula-box">
+        <strong>黃金規則：</strong>業務不搶技術的球，技術不搶業務的場。知道什麼時候傳球，比什麼都會答更重要。
+      </div>
+    </div>
+
+    <div class="card card-green">
+      <div class="tag green">底層心法</div>
+      <h3 class="card-title">Tiffany 的三個核心信念</h3>
+      <ul class="dot-list">
+        <li>「我是來幫你釐清問題的，不只是來賣東西的」— 她讓 Steven 提醒客戶先篩選需求，避免客製浪費</li>
+        <li>「主動出擊比被動防守強」— 競品比較表是她自己拿出來的，不是被問才說</li>
+        <li>「每場會議都要有明確的下一步」— 她在結尾確認了至少 4 個具體行動事項</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== OPENING ===== -->
+  <section id="opening" class="section">
+    <h2 class="section-title">開場<span>公式</span></h2>
+    <p class="section-intro">開場的目標只有一個：讓對方「放心坐下來聽」。Tiffany 用三個動作在 2 分鐘內完成這件事。</p>
+
+    <div class="card card-accent">
+      <div class="tag">開場三步驟公式</div>
+      <h3 class="card-title">框架先行 → 關係確認 → 議題授權</h3>
+      <div class="flow">
+        <div class="flow-step"><span class="num">1</span>框架先行<div class="label">說明今天分幾段、各做什麼</div></div>
+        <div class="flow-step"><span class="num">2</span>關係確認<div class="label">提及上次互動，建立連續感</div></div>
+        <div class="flow-step"><span class="num">3</span>議題授權<div class="label">說明「今天聚焦的是…」</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tag blue">Tiffany 原版話術</div>
+      <div class="quote-box">
+        <p>「本次會議流程分為兩段：第一段約 30 分鐘介紹 iLego 產品優勢與新功能；第二段進行需求清單釐清。上次已提供需求表單，本次針對表單內容提問。距離上次與 Aden 見面已有一段時間，希望藉此讓對方更完整了解 iLego 的功能。」</p>
+        <div class="source">— 逐字稿 / 會議開場說明</div>
+      </div>
+    </div>
+
+    <div class="card card-blue">
+      <div class="tag blue">可套用的開場模板</div>
+      <h3 class="card-title">你的版本（填入你的情境）</h3>
+      <div class="formula-box">
+        「今天的會議我規劃兩個段落：<strong>第一段 __ 分鐘</strong>，我會介紹＿＿；<strong>第二段</strong>，我們針對你們的需求清單 / 問題一起釐清。上次我們談到了＿＿，今天我想讓你對＿＿有更完整的了解。」
+      </div>
+      <ul class="dot-list">
+        <li>時間分段要具體（說「30分鐘」比說「上半段」有份量）</li>
+        <li>一定要提到「上次」——哪怕只是一封 email，也能建立連續感</li>
+        <li>讓對方知道「這是一場雙向會議」，不只是單向簡報</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== PITCH ===== -->
+  <section id="pitch" class="section">
+    <h2 class="section-title">說服<span>結構</span></h2>
+    <p class="section-intro">Tiffany 不列功能，她列「理由」。這個差異決定了聽眾記不記得你說的話。</p>
+
+    <div class="card card-accent">
+      <div class="tag">核心說服公式</div>
+      <h3 class="card-title">WHY 框架：原因 > 功能 > 證明</h3>
+      <div class="formula-box">
+        不要說「我們有 OCR 功能」<br>
+        而要說「<strong>第一個選擇我們的原因是：</strong>我們是專為合約設計的系統，所以連 OCR 都針對合約掃描優化，有文字校正機制。」
+      </div>
+      <ul class="dot-list">
+        <li>每個功能都要先給一個「所以你應該在乎」的理由</li>
+        <li>Tiffany 用「五大核心原因」組織所有功能，讓聽眾有骨架可掛</li>
+        <li>先說結論（原因），再說細節（功能），最後給證據（案例）</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="tag">競品應對公式</div>
+      <h3 class="card-title">主動比較，自己定義戰場</h3>
+      <p style="font-size:14px;color:#555;margin-bottom:16px;">Tiffany 主動拿出競品比較表，這是她最聰明的一個動作。</p>
+      <table class="comp-table">
+        <thead><tr><th>錯誤做法</th><th>Tiffany 的做法</th></tr></thead>
+        <tbody>
+          <tr><td class="bad">等客戶問「你跟 XX 有什麼不同」才回答</td><td class="good">主動拿出比較表，自己選比較維度</td></tr>
+          <tr><td class="bad">攻擊競品的缺點</td><td class="good">定義競品是「不同的東西」，而非「比較差的東西」</td></tr>
+          <tr><td class="bad">每個維度都說自己贏</td><td class="good">承認定位不同（DocuWare 適合通用型），凸顯自己的專業深度</td></tr>
+        </tbody>
+      </table>
+      <div class="formula-box">
+        <strong>競品比較公式：</strong>「市場上有三種選擇：A 是通用型、B 是輕量型、我們是＿＿型。如果你的需求是＿＿，我們是最合適的。」
+      </div>
+    </div>
+
+    <div class="card card-green">
+      <div class="tag green">Tiffany 的五大原因結構拆解</div>
+      <h3 class="card-title">「五大原因」背後的邏輯</h3>
+      <ul class="dot-list">
+        <li><strong>原因一（功能廣度）</strong>— 讓你知道我什麼都有，安心</li>
+        <li><strong>原因二（公司信譽）</strong>— 讓你知道我不是新創，放心</li>
+        <li><strong>原因三（整合經驗）</strong>— 讓你知道導入不會出問題，信任</li>
+        <li><strong>原因四（競品比較）</strong>— 讓你知道為什麼選我而不是別人，決策</li>
+        <li><strong>原因五（系統安全）</strong>— 讓你知道這符合法規與資安，消除風險</li>
+      </ul>
+      <div class="formula-box">
+        <strong>通用五大原因架構：</strong>功能完整度 → 公司可靠度 → 導入成功率 → 競品差異化 → 風險消除
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OBJECTION ===== -->
+  <section id="objection" class="section">
+    <h2 class="section-title">應對<span>技巧</span></h2>
+    <p class="section-intro">Tiffany 應對問題的方式有固定模式：先接球、確認理解、給答案、給下一步。點開下方情境看她的實際做法。</p>
+
+    <div class="card card-accent">
+      <div class="tag">萬用應答公式</div>
+      <h3 class="card-title">C.A.R.S. 四步應答法</h3>
+      <div class="flow">
+        <div class="flow-step"><span class="num">C</span>Confirm<div class="label">確認我理解你的問題</div></div>
+        <div class="flow-step"><span class="num">A</span>Answer<div class="label">給出現有規格答案</div></div>
+        <div class="flow-step"><span class="num">R</span>Range<div class="label">說明彈性空間（可客製）</div></div>
+        <div class="flow-step"><span class="num">S</span>Suggest<div class="label">給一個具體建議或下一步</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tag blue">真實情境拆解</div>
+      <h3 class="card-title">點開看 Tiffany 的實際應答</h3>
+
+      <div class="scenario">
+        <div class="scenario-q" onclick="toggleScenario(this)">
+          😰 客戶問：「我們有日籍員工，系統支援日文嗎？」<span class="arrow">▶</span>
+        </div>
+        <div class="scenario-a">
+          <div class="pattern">CARS 應用：確認需求方向 → 給現有規格 → 說明加購彈性</div>
+          <p>Tiffany 先確認：「你的需求是介面日文化，而不是合約內容翻譯，對嗎？」→ 給答案：「目前支援繁中、簡中、英文」→ 給彈性：「日文可以加購，翻譯內容由你們提供」→ 不急著報價，先確認需求範圍。</p>
+          <hr style="margin:12px 0;border:none;border-top:1px dashed #ddd;">
+          <p style="color:#888;font-size:13px;"><strong>你可以學的：</strong>「做不到」永遠不是第一句話。先確認需求、給現有方案、再說擴充路徑。</p>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-q" onclick="toggleScenario(this)">
+          😰 客戶問：「可以自訂新的角色身份嗎？（如財務長）」<span class="arrow">▶</span>
+        </div>
+        <div class="scenario-a">
+          <div class="pattern">CARS 應用：不說「不能」，說「目前規格是…，有需求可提出」</div>
+          <p>Steven 回答（Tiffany 傳球）：「目前未開放自行新增，因為每個身份涉及程式調整」→ 立刻給出路：「有需求可以提出，宏思評估後報價」→ 建議顧問時數方案（40小時）來消化客製需求。</p>
+          <hr style="margin:12px 0;border:none;border-top:1px dashed #ddd;">
+          <p style="color:#888;font-size:13px;"><strong>你可以學的：</strong>把限制包裝成「可評估的機會」，而不是死路。</p>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-q" onclick="toggleScenario(this)">
+          😰 客戶問：「資料閱覽可以限制到只有本人才看得到嗎？」<span class="arrow">▶</span>
+        </div>
+        <div class="scenario-a">
+          <div class="pattern">CARS 應用：先說標準規格，再說客製路徑，不承諾也不拒絕</div>
+          <p>Tiffany 回答：「標準導入是『員工看自己、主管看部門、法務看全公司』」→ 給彈性：「若需更細緻管控，可透過客製化處理」→ 引導下一步：「建議告知哪些欄位要隱碼，我們用客製方式解決」。</p>
+          <hr style="margin:12px 0;border:none;border-top:1px dashed #ddd;">
+          <p style="color:#888;font-size:13px;"><strong>你可以學的：</strong>把「客製」當成升級路徑，不是藉口。給對方一個「帶著作業回去」的感覺。</p>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-q" onclick="toggleScenario(this)">
+          😰 客戶說：「我們還在等高層的第二次決策會議…」<span class="arrow">▶</span>
+        </div>
+        <div class="scenario-a">
+          <div class="pattern">推進技巧：接受現狀 + 填補等待期的空白</div>
+          <p>Tiffany 不催促，而是問「試用帳號有沒有在使用？」→ 確認試用環境持續活躍 → 提議把今天簡報加上價格方案一起提供 → 讓等待期變成「持續接觸期」，而不是冷卻期。</p>
+          <hr style="margin:12px 0;border:none;border-top:1px dashed #ddd;">
+          <p style="color:#888;font-size:13px;"><strong>你可以學的：</strong>當客戶說「還在等」，你的任務是「讓等待期保持溫度」，不是催決策。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLOSING ===== -->
+  <section id="closing" class="section">
+    <h2 class="section-title">收尾<span>推進</span></h2>
+    <p class="section-intro">好的收尾不是結束，是「下一段關係的開始」。Tiffany 的收尾動作乾淨、具體、有記錄。</p>
+
+    <div class="card card-accent">
+      <div class="tag">收尾公式</div>
+      <h3 class="card-title">每場會議結束前必做的四件事</h3>
+      <div class="flow">
+        <div class="flow-step"><span class="num">1</span>確認回顧<div class="label">我今天分享了什麼</div></div>
+        <div class="flow-step"><span class="num">2</span>行動清單<div class="label">我會做什麼、你會做什麼</div></div>
+        <div class="flow-step"><span class="num">3</span>時程錨定<div class="label">什麼時候前完成</div></div>
+        <div class="flow-step"><span class="num">4</span>下次觸點<div class="label">下次接觸的條件是什麼</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tag blue">Tiffany 的實際行動清單</div>
+      <h3 class="card-title">她在這場會議結束時確認了什麼</h3>
+      <table class="comp-table">
+        <thead><tr><th>負責方</th><th>行動事項</th><th>時程</th></tr></thead>
+        <tbody>
+          <tr><td><strong>宏思（Tiffany）</strong></td><td>提供完整簡報含價格方案</td><td>會後盡快</td></tr>
+          <tr><td><strong>宏思（Steven）</strong></td><td>轉發試用帳號說明</td><td>會後盡快</td></tr>
+          <tr><td><strong>客戶（Aden）</strong></td><td>消化簡報、篩選需求清單</td><td>內部討論後</td></tr>
+          <tr><td><strong>客戶（Aden）</strong></td><td>高層決策會議後通知安排正式 Demo</td><td>待定</td></tr>
+        </tbody>
+      </table>
+      <div class="formula-box">
+        <strong>關鍵洞察：</strong>她連「客戶要做什麼」都確認進去了。雙向行動清單比單向承諾更有約束力。
+      </div>
+    </div>
+
+    <div class="card card-red">
+      <div class="tag red">常見錯誤</div>
+      <h3 class="card-title">業務收尾的三個大坑</h3>
+      <table class="comp-table">
+        <thead><tr><th>❌ 常見錯誤</th><th>✅ Tiffany 的做法</th></tr></thead>
+        <tbody>
+          <tr><td class="bad">「那我們之後再聯絡」（沒有具體行動）</td><td class="good">明確說「我今天會後提供簡報與價格方案」</td></tr>
+          <tr><td class="bad">只列自己要做什麼</td><td class="good">同時確認客戶端的行動事項</td></tr>
+          <tr><td class="bad">當場推動決策（催購）</td><td class="good">尊重流程，填補等待期（試用帳號、提供資料）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== CHECKLIST ===== -->
+  <section id="checklist" class="section">
+    <h2 class="section-title">實戰<span>清單</span></h2>
+    <p class="section-intro">每次重要業務會議前後使用。點擊方框勾選完成。</p>
+
+    <div class="card card-accent">
+      <div class="tag">會議前準備</div>
+      <h3 class="card-title">出發前 10 分鐘確認</h3>
+      <ul class="checklist" id="pre-checklist">
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>我知道今天會議分幾段、每段目標是什麼</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>我準備好「為什麼選我們」的 3-5 個核心原因（非功能列表）</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>我知道主要競品是誰，以及我要如何定位差異</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>我確認技術同事知道今天哪些環節要他接手</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>我回顧了上次與這個客戶的互動紀錄</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>我準備好試用帳號、相關資料等輔助工具</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="tag blue">開場執行</div>
+      <h3 class="card-title">前 5 分鐘</h3>
+      <ul class="checklist" id="open-checklist">
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>開場說明今天的議程架構（分幾段、各做什麼）</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>提及上次的互動，建立連續感</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>說明今天聚焦的核心問題是什麼</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="tag green">說服過程</div>
+      <h3 class="card-title">簡報中段</h3>
+      <ul class="checklist" id="mid-checklist">
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>每個功能都包裝在「原因」下，而非單純列功能</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>主動提出競品比較，自己定義比較維度</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>複雜技術問題傳球給技術同事，我掌控節奏</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>有案例佐證（不只是功能說明）</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="tag red">應對問題</div>
+      <h3 class="card-title">Q&A 階段</h3>
+      <ul class="checklist" id="qa-checklist">
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>先確認我理解了問題的方向，再回答</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>「做不到」永遠不是第一句話，先給現有方案</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>限制包裝成「可客製的機會」，給對方帶作業回去</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>沒把握的問題，坦承「需確認」並給時限</span></li>
+      </ul>
+    </div>
+
+    <div class="card card-accent">
+      <div class="tag">會議收尾</div>
+      <h3 class="card-title">最後 5 分鐘</h3>
+      <ul class="checklist" id="close-checklist">
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>口頭確認：今天分享了哪些重點</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>確認「我方」的行動事項與時程</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>確認「客戶方」的行動事項（讓他們有作業）</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>確認下一次接觸的觸發條件（什麼事發生後聯絡我）</span></li>
+        <li onclick="toggleCheck(this)"><div class="check-icon"></div><span>會後 24 小時內發送會議摘要與承諾事項</span></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tabs = ['overview','opening','pitch','objection','closing','checklist'];
+  document.querySelectorAll('.nav-tab')[tabs.indexOf(id)].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleScenario(el) {
+  const answer = el.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.scenario-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.scenario-q').forEach(q => q.classList.remove('open'));
+  if (!isOpen) {
+    answer.classList.add('open');
+    el.classList.add('open');
+  }
+}
+
+function toggleCheck(li) {
+  const icon = li.querySelector('.check-icon');
+  const span = li.querySelector('span');
+  icon.classList.toggle('checked');
+  li.classList.toggle('checked-item');
+}
+</script>
+</body>
+</html>
